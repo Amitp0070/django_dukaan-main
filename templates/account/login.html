@@ -1,51 +1,110 @@
 {% extends "layout/base.html" %}
 {% load i18n %}
-{% load allauth account %}
-
+{% load static %}
+{% load account socialaccount %}
 
 {% block css %}
 <style>
-    body{
+    body {
         background-color: #fffffe;
     }
-    .container{
-    padding-top: 25px;
-   }
+    .container {
+        padding-top: 25px;
+    }
+    .card {
+        border-radius: 15px;
+        overflow: hidden;
+    }
+    .card-header {
+        background-color: #343a40;
+        color: #ffffff;
+        padding: 20px;
+    }
+    .card-body {
+        padding: 30px;
+    }
+    .form-control-lg {
+        font-size: 16px;
+    }
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        padding: 12px;
+        font-size: 18px;
+        font-weight: bold;
+    }
+    .social-signup {
+        margin-top: 20px;
+        text-align: center;
+    }
+    .social-signup h3 {
+        font-size: 18px;
+        margin-bottom: 15px;
+        color: #6c757d;
+    }
+    .google-signup {
+        display: inline-flex;
+        align-items: center;
+        background-color: #ffffff;
+        color: #535353;
+        border: 1px solid #dadce0;
+        border-radius: 4px;
+        padding: 10px 15px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: background-color 0.3s;
+    }
+    .google-signup:hover {
+        background-color: #f1f3f4;
+    }
+    .google-signup img {
+        width: 25px;
+        height: 25px;
+        margin-right: 10px;
+    }
+    .create-account {
+        margin-top: 15px;
+    }
 </style>
 {% endblock css %}
+
 {% block body %}
 <div class="container">
     <div class="row">
         <div class="col-lg-4 col-md-8 mx-auto">
             <form method="post" class="card shadow-lg">
                 {% csrf_token %}
-                <div class="card-header text-center bg-dark text-light">
+                <div class="card-header text-center">
                     <h3>Login to Account</h3>
                 </div>
                 <div class="card-body">
-                    <div class="mb-2">
+                    <div class="mb-3">
                         <label for="username" class="form-label">Username</label>
                         <input type="text" class="form-control form-control-lg" name="username" id="username"
                             aria-describedby="userHelp" placeholder="Username" />
                     </div>
-                    <div class="mb-2">
+                    <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
                         <input type="password" class="form-control form-control-lg" name="pass" id="pass"
-                            aria-describedby="passHelp" placeholder="password" />
+                            aria-describedby="passHelp" placeholder="Password" />
                     </div>
-                    <div class="d-grid text-center">
-                        <button class="btn btn-primary">
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">
                             Login
                         </button>
-                        <a class="fw-bold nav-link p-3 fs-6" href="#">Create an account</a>
-                        {% include "socialaccount/snippets/login.html" %}
+                    </div>
+                    <div class="social-signup">
+                                <a href="{% provider_login_url provider.id %}" class="google-signup">
+                                    <img src="{% static 'images/google.png' %}" alt="{{ provider.name }} Icon">
+                                    Sign up with Google
+                                </a>
+                    </div>
+                    <div class="create-account text-center">
+                        <a class="fw-bold nav-link" href="#">Create an account</a>
                     </div>
                 </div>
-                
             </form>
         </div>
     </div>
 </div>
-   
-    
-{% endblock  %}
+{% endblock %}
